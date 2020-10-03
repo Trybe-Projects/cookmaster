@@ -25,7 +25,7 @@ const findByEmail = async (userEmail) => {
       .bind('email', userEmail)
       .execute(),
     )
-    .then((results) => results.fetchOne())
+    .then((results) => results.fetchOne());
 
   const [id, email, password, name, lastName] = userData;
 
@@ -43,8 +43,7 @@ const findById = async (userId) => {
     .where('id = :id')
     .bind('id', userId)
     .execute())
-    .then((results) => results.fetchOne())
-    .catch((err) => console.error(err));
+    .then((results) => results.fetchOne());
 
   const [id, email, password, name, lastName] = userData;
 

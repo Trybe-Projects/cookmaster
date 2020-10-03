@@ -10,7 +10,7 @@ const connection = () =>
       schema: 'cookmaster',
     })
     .then((session) => session.getSchema('cookmaster'))
-    .catch((err) => {
+    .catch(() => {
       process.exit(1);
     });
 
