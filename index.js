@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', controllers.recipesController);
+app.get('/', middlewares.auth(false), controllers.recipesController);
 
 app.get('/admin', middlewares.auth(true), (req, res) => {
   return res.render('admin/home', { user: req.user });
@@ -21,5 +21,7 @@ app.get('/admin', middlewares.auth(true), (req, res) => {
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);
 app.post('/login', controllers.userController.login);
+app.get('/register', controllers.userController.registerUserForm);
+app.post('/register', controllers.userController.registerUser);
 
 app.listen(3000, () => console.log('Listening on 3000'));
