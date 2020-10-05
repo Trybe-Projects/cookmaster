@@ -43,12 +43,10 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
-const registerUserForm = (req, res) => {
-  return res.render('register', {
+const registerUserForm = (req, res) => res.render('register', {
     message: null,
     redirect: req.query.redirect,
   });
-};
 
 const registerUser = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
@@ -60,7 +58,7 @@ const registerUser = async (req, res) => {
   }
 
   await userModel.insertUser(email, password, firstName, lastName);
-  res.redirect('register');
+  res.render('register', { message: 'Cadastro efetuado com sucesso!' });
 };
 
 module.exports = {

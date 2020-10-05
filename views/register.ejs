@@ -6,11 +6,15 @@
     <title>Cookmaster - Register</title>
   </head>
   <body>
-    <% if (message) { %> <% message.forEach((item) => { %>
-    <p><%= item %></p>
-    <% }) %> <% } else { %>
-    <p>Cadastro efetuado com sucesso!</p>
+    <% if (message && typeof message !== 'string') { %> 
+      <% message.forEach((item) => { %>
+      <p><%= item %></p>
+      <% }) %> 
     <% } %>
+
+    <% if (message && typeof message === 'string') { %>
+    <p><%= message %></p>
+    <% } %> 
     <form action="/register" method="POST">
       <label for="emailInput">Email </label>
       <input type="text" name="email" id="emailInput" data-testid="email" /><br />
