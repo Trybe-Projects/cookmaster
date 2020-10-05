@@ -58,9 +58,9 @@ const emailValidation = (email) => {
   if (!email || !emailRegex.test(email)) {
     message.push('O email deve ter o formato email@mail.com');
   }
-  
+
   return message;
-}
+};
 
 const namesValidation = (firstName, lastName) => {
   const message = [];
@@ -71,9 +71,9 @@ const namesValidation = (firstName, lastName) => {
   if (!lastName || !namesRegex.test(lastName) || lastName.length < 3) {
     message.push('O segundo nome deve ter, no mínimo, 3 caracteres, sendo eles apenas letras');
   }
-  
+
   return message;
-}
+};
 
 const passwordValidation = (password, passwordConfirmation) => {
   const message = [];
@@ -85,7 +85,7 @@ const passwordValidation = (password, passwordConfirmation) => {
   }
 
   return message;
-}
+};
 
 const isValid = (email, password, passwordConfirmation, name, lastName) => {
   const emailMessage = emailValidation(email);

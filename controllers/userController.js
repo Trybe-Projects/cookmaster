@@ -44,9 +44,9 @@ const logout = (req, res) => {
 };
 
 const registerUserForm = (req, res) => res.render('register', {
-    message: null,
-    redirect: req.query.redirect,
-  });
+  message: null,
+  redirect: req.query.redirect,
+});
 
 const registerUser = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
