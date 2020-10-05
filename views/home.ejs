@@ -6,10 +6,10 @@
     <title>Cookmaster - Home</title>
   </head>
   <body>
-    <%- include('header', { token }); %>
+    <%- include('header', { user }); %>
     <h1>Receitas</h1>
     <button data-testid="buscar-receita">Buscar Receita</button>
-    <% if (token) { %>
+    <% if (user) { %>
     <button data-testid="nova-receita">Nova Receita</button>
     <% } %> <% recipes.forEach((recipe) => { %>
     <div>
@@ -17,6 +17,6 @@
       <h4><%= recipe.user %></h4>
       <a href="/recipe/:id">Ver mais</a>
     </div>
-    <% }) %> <% console.log(recipes) %>
+    <% }) %>
   </body>
 </html>
