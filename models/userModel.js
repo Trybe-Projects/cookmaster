@@ -19,11 +19,7 @@ de fato, realize a busca no banco de dados */
 const findByEmail = async (userEmail) => {
   const userData = await connection()
     .then((db) =>
-      db.getTable('users')
-      .select([])
-      .where('email = :email')
-      .bind('email', userEmail)
-      .execute(),
+      db.getTable('users').select([]).where('email = :email').bind('email', userEmail).execute(),
     )
     .then((results) => results.fetchOne());
 
@@ -38,11 +34,7 @@ const findByEmail = async (userEmail) => {
  */
 const findById = async (userId) => {
   const userData = await connection()
-    .then((db) => db.getTable('users')
-    .select([])
-    .where('id = :id')
-    .bind('id', userId)
-    .execute())
+    .then((db) => db.getTable('users').select([]).where('id = :id').bind('id', userId).execute())
     .then((results) => results.fetchOne());
 
   const [id, email, password, name, lastName] = userData;
@@ -50,7 +42,42 @@ const findById = async (userId) => {
   return { id, email, password, name, lastName };
 };
 
+const isValid = (email, password, passwordConfirmation, name, lastName) => {
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const namesRegex = /^[a-zA-Z]+$/;
+  const message = [];
+  if (!email || !emailRegex.test(email)) {
+    message.push('O email deve ter o formato email@mail.com');
+  }
+  if (!password || password.length < 6) {
+    message.push('A senha deve ter pelo menos 6 caracteres');
+  }
+  if (!passwordConfirmation || passwordConfirmation !== password) {
+    message.push('As senhas tem que ser iguais');
+  }
+  if (!name || !namesRegex.test(name) || name.length < 3) {
+    message.push('O primeiro nome deve ter, no mínimo, 3 caracteres, sendo eles apenas letras');
+  }
+  if (!lastName || !namesRegex.test(lastName) || lastName.length < 3) {
+    message.push('O segundo nome deve ter, no mínimo, 3 caracteres, sendo eles apenas letras');
+  }
+
+  return message;
+};
+
+const insertUser = async (email, password, firstName, lastName) => {
+  connection().then((db) =>
+    db
+      .getTable('users')
+      .insert(['email', 'password', 'first_name', 'last_name'])
+      .values(email, password, firstName, lastName)
+      .execute(),
+  );
+};
+
 module.exports = {
   findByEmail,
   findById,
+  isValid,
+  insertUser,
 };
