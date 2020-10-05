@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Register</title>
+  </head>
+  <body>
+    <% if (message) { %> <% message.forEach((item) => { %>
+    <p><%= item %></p>
+    <% }) %> <% } else { %>
+    <p>Cadastro efetuado com sucesso!</p>
+    <% } %>
+    <form action="/register" method="POST">
+      <label for="emailInput">Email </label>
+      <input type="text" name="email" id="emailInput" data-testid="email" /><br />
+      <label for="passwordInput">Senha </label>
+      <input type="password" name="password" id="passwordInput" data-testid="senha" /><br />
+      <label for="passwordConfirmInput">Confirmar Senha </label>
+      <input
+        type="password"
+        name="confirmPassword"
+        id="confirmPasswordInput"
+        data-testid="confirmar-senha"
+      /><br />
+      <label for="firstName">Nome</label>
+      <input type="text" name="firstName" id="firstName" data-testid="nome" /><br />
+      <label for="lastName">Sobrenome</label>
+      <input type="text" name="lastName" id="lastName" data-testid="sobrenome" /><br />
+      <a href="/login" data-testid="login">Login</a>
+      <button type="submit" data-testid="cadastrar">Cadastrar-se</button>
+    </form>
+  </body>
+</html>
