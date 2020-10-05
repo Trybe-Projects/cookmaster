@@ -34,7 +34,7 @@ const login = async (req, res, next) => {
   SESSIONS[token] = user.id;
 
   res.cookie('token', token, { httpOnly: true, sameSite: true });
-  res.redirect(redirect || '/admin');
+  res.redirect(redirect || '/');
 };
 
 const logout = (req, res) => {
@@ -43,8 +43,30 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const registerUserForm = (req, res) => {
+  return res.render('register', {
+    message: null,
+    redirect: req.query.redirect,
+  });
+};
+
+const registerUser = async (req, res) => {
+  const { email, password, confirmPassword, firstName, lastName } = req.body;
+
+  if (userModel.isValid(email, password, confirmPassword, firstName, lastName).length > 0) {
+    return res.render('register', {
+      message: userModel.isValid(email, password, confirmPassword, firstName, lastName),
+    });
+  }
+
+  await userModel.insertUser(email, password, firstName, lastName);
+  res.redirect('register');
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  registerUserForm,
+  registerUser,
 };
