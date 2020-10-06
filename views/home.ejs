@@ -8,9 +8,10 @@
   <body>
     <%- include('header', { user }); %>
     <h1>Receitas</h1>
-    <button data-testid="buscar-receita">Buscar Receita</button>
+    <% console.log(recipes) %>
+    <a href="/recipes/search" data-testid="buscar-receita">Buscar Receita</a>
     <% if (user) { %>
-    <button data-testid="nova-receita">Nova Receita</button>
+    <a href="" data-testid="nova-receita">Nova Receita</a>
     <% } %> <% recipes.forEach((recipe) => { %>
     <div>
       <h2><%= recipe.name %></h2>
