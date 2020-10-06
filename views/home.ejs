@@ -15,7 +15,7 @@
     <div>
       <h2><%= recipe.name %></h2>
       <h4><%= recipe.user %></h4>
-      <a href="/recipe/:id">Ver mais</a>
+      <a href=<%= `/recipes/${recipe.id}` %> >Ver mais</a>
     </div>
     <% }) %>
   </body>
