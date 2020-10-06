@@ -12,11 +12,15 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', middlewares.auth(false), controllers.recipesController);
+app.get('/', middlewares.auth(false), controllers.recipesController.listRecipes);
 
 app.get('/admin', middlewares.auth(true), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
+
+app.get('/recipes/:id', middlewares.auth(false), controllers.recipesController.recipeDetails);
+app.get('/recipes/:id/edit', middlewares.auth(true), controllers.recipesController.recipeEdit);
+app.get('/recipes/:id/delete', middlewares.auth(true), controllers.recipesController.recipeDelete);
 
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);
