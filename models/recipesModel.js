@@ -22,12 +22,12 @@ const findRecipeById = async (recipeId) => {
   .where('id = :id')
   .bind('id', recipeId)
   .execute()
-  .then((result) => result.fetchOne())
+  .then((result) => result.fetchOne()),
   );
 
   const [id, userId, user, name, ingredients, instructions] = recipeData;
 
   return { id, userId, user, name, ingredients: ingredients.split(','), instructions };
-}
+};
 
 module.exports = { findAllRecipes, findRecipeById };
