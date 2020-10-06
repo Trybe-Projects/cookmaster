@@ -30,4 +30,24 @@ const findRecipeById = async (recipeId) => {
   return { id, userId, user, name, ingredients: ingredients.split(','), instructions };
 };
 
-module.exports = { findAllRecipes, findRecipeById };
+const findRecipeByName = async (query) => {
+  const recipesData = await connection()
+    .then((db) =>
+      db.getTable('recipes')
+      .select(['id', 'user', 'name'])
+      .where('name like :query')
+      .bind('query', `%${query}%`)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) =>
+      recipes.map(([id, user, name]) => ({
+        id,
+        user,
+        name,
+      })),
+    );
+
+  return recipesData;
+}
+
+module.exports = { findAllRecipes, findRecipeById, findRecipeByName };
