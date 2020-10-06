@@ -24,7 +24,6 @@ const recipeSearch = async (req, res) => {
   const { q } = req.query;
   if (!q) return res.status(200).render('recipeSearch', { recipes: null, user: req.user });
   const recipes = await recipesModel.findRecipeByName(q);
-  console.log(recipes);
   return res.status(200).render('recipeSearch', { recipes, user: req.user });
 };
 

@@ -48,6 +48,6 @@ const findRecipeByName = async (query) => {
     );
 
   return recipesData;
-}
+};
 
 module.exports = { findAllRecipes, findRecipeById, findRecipeByName };
