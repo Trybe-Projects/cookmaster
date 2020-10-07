@@ -18,6 +18,8 @@ app.get('/admin', middlewares.auth(true), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
 
+app.post('/recipes', middlewares.auth(true), controllers.recipesController.recipeCreate);
+app.get('/recipes/new', middlewares.auth(true), controllers.recipesController.recipeNew);
 app.get('/recipes/search', middlewares.auth(false), controllers.recipesController.recipeSearch);
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipesController.recipeDetails);
 app.get('/recipes/:id/edit', middlewares.auth(true), controllers.recipesController.recipeEdit);
