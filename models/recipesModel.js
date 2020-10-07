@@ -50,4 +50,14 @@ const findRecipeByName = async (query) => {
   return recipesData;
 };
 
-module.exports = { findAllRecipes, findRecipeById, findRecipeByName };
+const addRecipe = async (userId, userName, recipeName, recipeIngredients, recipeInstructions) => {
+  const recipeData = await connection()
+  .then((db) =>
+    db.getTable('recipes')
+    .insert(['user_id', 'user', 'name', 'ingredients', 'instructions'])
+    .values(userId, userName, recipeName, recipeIngredients, recipeInstructions)
+    .execute(),
+  );
+};
+
+module.exports = { findAllRecipes, findRecipeById, findRecipeByName, addRecipe };
