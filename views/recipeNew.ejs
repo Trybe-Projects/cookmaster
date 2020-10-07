@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Recipe details</title>
+  </head>
+  <body>
+    <%- include('header', { user }); %> <% console.log(user) %>
+    <h1>Nova Receita</h1>
+    <form action="/recipes" method="POST">
+      <label for="recipeName">Nome da Receita</label> <br />
+      <input type="text" name="recipeName" id="recipeName" data-testid="nome-receita" /> <br />
+
+      <label for="ingredientsInput">Ingredientes</label>
+      <ul id="ingredientsList"></ul>
+      <input type="hidden" name="ingredientsStr" id="ingredientsStr" />
+      <input type="text" name="ingredientsInput" id="ingredientsInput" data-testid="ingredientes" />
+      <button
+        type="button"
+        for="ingredients"
+        id="addIngredientBtn"
+        data-testid="adicionar-ingrediente"
+      >
+        Adicionar Ingrediente
+      </button>
+      <br />
+
+      <label for="instructions">Modo de preparo</label> <br />
+      <textarea
+        name="instructions"
+        cols="30"
+        rows="10"
+        id="instructions"
+        data-testid="modo-de-preparo"
+      ></textarea>
+      <br />
+
+      <a href="/">Voltar</a>
+      <button type="submit" data-testid="postar-receita">Salvar Receita</button>
+    </form>
+  </body>
+  <script>
+    const ingredientsInput = document.querySelector('#ingredientsInput');
+    const ingredientsStr = document.querySelector('#ingredientsStr');
+    const ingredientsList = document.querySelector('#ingredientsList');
+    const addIngredientBtn = document.querySelector('#addIngredientBtn');
+    let ingredientsListArr = [];
+
+    addIngredientBtn.addEventListener('click', () => {
+      const ingredientDiv = document.createElement('div');
+      const ingredientItem = document.createElement('li');
+      const delIngredientItemBtn = document.createElement('button');
+      delIngredientItemBtn.innerHTML = 'Excluir Ingrediente';
+
+      delIngredientItemBtn.addEventListener('click', () => {
+        ingredientsListArr.filter((item) => item !== ingredientItem.value);
+        ingredientDiv.remove();
+      });
+
+      ingredientsListArr.push(ingredientsInput.value);
+      ingredientsStr.value = ingredientsListArr.join(',');
+      ingredientItem.innerHTML = ingredientsInput.value;
+      ingredientDiv.appendChild(ingredientItem);
+      ingredientDiv.appendChild(delIngredientItemBtn);
+      ingredientsList.appendChild(ingredientDiv);
+      ingredientsInput.value = '';
+    });
+  </script>
+</html>
