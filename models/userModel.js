@@ -30,10 +30,6 @@ const findByEmail = async (userEmail) => {
   return { id, email, password, name, lastName };
 };
 
-/**
- * Busca um usuário através do seu ID
- * @param {string} id ID do usuário
- */
 const findById = async (userId) => {
   const userData = await connection()
     .then((db) => db
