@@ -61,9 +61,7 @@ const registerUser = async (req, res) => {
   res.render('register', { message: 'Cadastro efetuado com sucesso!' });
 };
 
-const editUserForm = async (req, res) => {
-  return res.render('userEdit', { user: req.user, message: null });
-};
+const editUserForm = async (req, res) => res.render('userEdit', { user: req.user, message: null });
 
 const editUser = async (req, res) => {
   const { email, password, confirmPassword, firstName, lastName } = req.body;
