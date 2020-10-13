@@ -11,6 +11,7 @@
     <a href="/recipes/search" data-testid="buscar-receita">Buscar Receita</a>
     <% if (user) { %>
     <a href="/recipes/new" data-testid="nova-receita">Nova Receita</a>
+    <a href="/me/recipes" data-testid="minhas-receitas">Minhas receitas</a>
     <% } %> <% recipes.forEach((recipe) => { %>
     <div>
       <h2><%= recipe.name %></h2>

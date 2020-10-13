@@ -7,6 +7,15 @@
   </head>
   <body>
     <%- include('header', { user }); %>
-    <h1>Receita deletada</h1>
+    <form action="/recipes/<%= id %>/delete" method="POST">
+      <h3>Confirme a exclusão da receita</h3>
+      <% if (message) { %>
+        <p><%= message %></p>
+      <% } %>
+      <label for="password">Senha</label>
+      <input type="password" name="password" data-testid="senha">
+      <a href="/" data-testid="cancelar">Cancelar</button>
+      <button type="submit" data-testid="confirmar">Confirmar</button>
+    </form>
   </body>
 </html>

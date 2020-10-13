@@ -7,6 +7,75 @@
   </head>
   <body>
     <%- include('header', { user }); %>
-    <h1>Receita editada</h1>
+    <h1>Editar receita</h1>
+    <form action="/recipes/<%= recipe.id %>" method="POST">
+      <label for="recipeName">Nome da Receita</label> <br />
+      <input type="text" name="recipeName" id="recipeName" data-testid="nome-receita" value="<%= recipe.name %>" <br />
+
+      <label for="ingredientsInput">Ingredientes</label>
+      <ul id="ingredientsList">
+        <% recipe.ingredients.forEach((recipeItem, index) => { %>
+          <div id=<%= `ingredientItem${index}` %>>
+            <li><%= recipeItem %></li>
+            <button type="button" onclick="delIngredientItem(event)">Exlcuir Ingrediente</button>
+          </div>
+        <% }) %>
+      </ul>
+      <input type="hidden" name="ingredientsStr" id="ingredientsStr" value="<%= recipe.ingredients %>" />
+      <input type="text" name="ingredientsInput" id="ingredientsInput" data-testid="ingredientes" />
+      <button
+        type="button"
+        for="ingredients"
+        id="addIngredientBtn"
+        data-testid="adicionar-ingrediente"
+      >
+        Adicionar Ingrediente
+      </button>
+      <br />
+
+      <label for="instructions">Modo de preparo</label> <br />
+      <textarea
+        name="instructions"
+        rows="10"
+        cols="30"
+        id="instructions"
+        data-testid="modo-de-preparo"
+      ><%= recipe.instructions %></textarea> <br />
+
+      <a href="/">Voltar</a>
+      <button type="submit" data-testid="postar-receita">Salvar Receita</button>
+    </form>
   </body>
+  <script>
+    const ingredientsInput = document.querySelector('#ingredientsInput');
+    const ingredientsStr = document.querySelector('#ingredientsStr');
+    const ingredientsList = document.querySelector('#ingredientsList');
+    const addIngredientBtn = document.querySelector('#addIngredientBtn');
+    let ingredientsListArr = ingredientsStr.value.split(',');
+
+    const delIngredientItem = (event) => {
+      ingredientsListArr = ingredientsListArr.filter((item) => item !== 'ovo');
+      event.target.parentElement.remove();
+    }
+
+    addIngredientBtn.addEventListener('click', () => {
+      const ingredientDiv = document.createElement('div');
+      const ingredientItem = document.createElement('li');
+      const delIngredientItemBtn = document.createElement('button');
+      delIngredientItemBtn.innerHTML = 'Excluir Ingrediente';
+
+      delIngredientItemBtn.addEventListener('click', () => {
+        ingredientsListArr = ingredientsListArr.filter((item) => item !== ingredientItem.value);
+        ingredientDiv.remove();
+      });
+
+      ingredientsListArr.push(ingredientsInput.value);
+      ingredientsStr.value = ingredientsListArr.join(',');
+      ingredientItem.innerHTML = ingredientsInput.value;
+      ingredientDiv.appendChild(ingredientItem);
+      ingredientDiv.appendChild(delIngredientItemBtn);
+      ingredientsList.appendChild(ingredientDiv);
+      ingredientsInput.value = '';
+    });
+  </script>
 </html>

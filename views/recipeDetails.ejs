@@ -7,7 +7,6 @@
   </head>
   <body>
     <%- include('header', { user }); %>
-    <% console.log(recipe) %>
     <% if (user && user.id === recipe.userId) { %>
       <a href=<%= `/recipes/${recipe.id}/edit` %> data-testid="editar-receita">Editar Receita</a>
       <a href=<%= `/recipes/${recipe.id}/delete` %> data-testid="excluir-receita">Excluir Receita</a>

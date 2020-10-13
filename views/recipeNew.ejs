@@ -6,7 +6,7 @@
     <title>Cookmaster - New recipe</title>
   </head>
   <body>
-    <%- include('header', { user }); %> <% console.log(user) %>
+    <%- include('header', { user }); %>
     <h1>Nova Receita</h1>
     <form action="/recipes" method="POST">
       <label for="recipeName">Nome da Receita</label> <br />
@@ -29,8 +29,8 @@
       <label for="instructions">Modo de preparo</label> <br />
       <textarea
         name="instructions"
-        cols="30"
         rows="10"
+        cols="30"
         id="instructions"
         data-testid="modo-de-preparo"
       ></textarea>

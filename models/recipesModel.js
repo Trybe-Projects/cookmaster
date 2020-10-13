@@ -60,4 +60,57 @@ const addRecipe = async (userId, userName, recipeName, recipeIngredients, recipe
   );
 };
 
-module.exports = { findAllRecipes, findRecipeById, findRecipeByName, addRecipe };
+const editRecipe = async (recipeId, recipeName, recipeIngredients, recipeInstructions) => {
+  await connection()
+  .then((db) =>
+  db.getTable('recipes')
+  .update()
+  .set('name', recipeName)
+  .set('ingredients', recipeIngredients)
+  .set('instructions', recipeInstructions)
+  .where('id = :id')
+  .bind('id', recipeId)
+  .execute()
+  );
+};
+
+const deleteRecipe = async (recipeId) => {
+  await connection()
+  .then((db) =>
+  db.getTable('recipes')
+  .delete()
+  .where('id = :id')
+  .bind('id', recipeId)
+  .execute()
+  );
+};
+
+const findUserRecipes = async (userId) => {
+  const recipesData = await connection()
+    .then((db) => db
+    .getTable('recipes')
+    .select(['id', 'user', 'name'])
+    .where('user_id = :id')
+    .bind('id', userId)
+    .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) =>
+      recipes.map(([id, user, name]) => ({
+        id,
+        user,
+        name,
+      })),
+    );
+
+  return recipesData;
+};
+
+module.exports = {
+  findAllRecipes,
+  findRecipeById,
+  findRecipeByName,
+  addRecipe,
+  editRecipe,
+  deleteRecipe,
+  findUserRecipes
+};
