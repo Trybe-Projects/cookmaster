@@ -61,10 +61,29 @@ const registerUser = async (req, res) => {
   res.render('register', { message: 'Cadastro efetuado com sucesso!' });
 };
 
+const editUserForm = async (req, res) => {
+  return res.render('userEdit', { user: req.user, message: null });
+};
+
+const editUser = async (req, res) => {
+  const { email, password, confirmPassword, firstName, lastName } = req.body;
+
+  if (userModel.isValid(email, password, confirmPassword, firstName, lastName).length > 0) {
+    return res.render('userEdit', {
+      message: userModel.isValid(email, password, confirmPassword, firstName, lastName),
+    });
+  }
+
+  await userModel.editUser(req.user.id, email, password, firstName, lastName);
+  return res.redirect('/');
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
   registerUserForm,
   registerUser,
+  editUserForm,
+  editUser,
 };

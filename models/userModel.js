@@ -103,9 +103,25 @@ const insertUser = async (email, password, firstName, lastName) => {
   );
 };
 
+const editUser = async (userId, email, password, firstName, lastName) => {
+  await connection()
+  .then((db) =>
+  db.getTable('users')
+  .update()
+  .set('email', email)
+  .set('password', password)
+  .set('first_name', firstName)
+  .set('last_name', lastName)
+  .where('id = :id')
+  .bind('id', userId)
+  .execute(),
+  );
+};
+
 module.exports = {
   findByEmail,
   findById,
   isValid,
   insertUser,
+  editUser,
 };
