@@ -41,7 +41,7 @@ const recipeDelete = async (req, res) => {
     await recipesModel.deleteRecipe(id);
     return res.status(200).redirect('/');
   }
-  res.render('recipeDelete', { id, user: req.user, message: 'Senha Incorreta.'});
+  return res.render('recipeDelete', { id, user: req.user, message: 'Senha Incorreta.' });
 };
 
 const recipeSearch = async (req, res) => {
@@ -69,7 +69,7 @@ const myRecipes = async (req, res) => {
   const user = req.user;
   const recipes = await recipesModel.findUserRecipes(user.id);
   res.render('myRecipes', { recipes, user });
-}
+};
 
 module.exports = {
   listRecipes,

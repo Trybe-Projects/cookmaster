@@ -70,7 +70,7 @@ const editRecipe = async (recipeId, recipeName, recipeIngredients, recipeInstruc
   .set('instructions', recipeInstructions)
   .where('id = :id')
   .bind('id', recipeId)
-  .execute()
+  .execute(),
   );
 };
 
@@ -81,7 +81,7 @@ const deleteRecipe = async (recipeId) => {
   .delete()
   .where('id = :id')
   .bind('id', recipeId)
-  .execute()
+  .execute(),
   );
 };
 
@@ -112,5 +112,5 @@ module.exports = {
   addRecipe,
   editRecipe,
   deleteRecipe,
-  findUserRecipes
+  findUserRecipes,
 };
